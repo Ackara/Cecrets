@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Acklann.Cecrets</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Cecrets</Title>
+    <Description>A tool for sharing sensitive data across your projects.</Description>
+    
+    <Version>0.0.7</Version>
+    <AssemblyVersion>0.0.7</AssemblyVersion>
+    <AssemblyFileVersion>0.0.7</AssemblyFileVersion>
+
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+
+    <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/Ackara/Cecrets/blob/master/changelog.md</PackageReleaseNotes>
+
+    <Authors>Ackara</Authors>
+    <Company>Ackara</Company>
+    <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup Label="Package">
+    <Content Include="..\..\art\icon.png">
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </Content>
+
+    <Content Include="..\..\license.txt">
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </Content>
+
+    <Content Include="obj\msbuild\" Condition="Exists('obj\msbuild\')">
+      <PackagePath>tools</PackagePath>
+      <Visible>false</Visible>
+    </Content>
+
+    <Content Include="..\$(MSBuildProjectName).MSBuild\*.targets">
+      <PackagePath>build\$(AssemblyName).targets</PackagePath>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+</Project>

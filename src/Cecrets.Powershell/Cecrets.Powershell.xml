@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cecrets.Powershell</name>
+    </assembly>
+    <members>
+        <member name="T:Acklann.Cecrets.AddUserSecretCmdlet">
+            <summary>
+            <para type="synopsis">Add a foo</para>
+            </summary>
+            <seealso cref="T:System.Management.Automation.Cmdlet" />
+        </member>
+        <member name="P:Acklann.Cecrets.AddUserSecretCmdlet.Value">
+            <summary>
+            Gets or sets the value.
+            <para type="description"></para>
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:Acklann.Cecrets.AddUserSecretCmdlet.Path">
+            <summary>
+            Gets or sets the path.
+            </summary>
+            <value>
+            The path.
+            </value>
+        </member>
+    </members>
+</doc>

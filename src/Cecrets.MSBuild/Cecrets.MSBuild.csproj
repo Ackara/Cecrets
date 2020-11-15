@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Acklann.Cecrets</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package">
+    <Title>Cecrets</Title>
+    <Version>0.0.7</Version>
+    <AssemblyVersion>0.0.7</AssemblyVersion>
+    <AssemblyFileVersion>0.0.7</AssemblyFileVersion>
+
+    <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/Ackara/Cecrets/blob/master/changelog.md</PackageReleaseNotes>
+
+    <Company>Ackara</Company>
+    <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+  
+<Description>A tool for sharing sensitive data across your projects.</Description>
+<Authors>Ackara</Authors>
+</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cecrets\Cecrets.csproj" />
+  </ItemGroup>
+
+
+</Project>

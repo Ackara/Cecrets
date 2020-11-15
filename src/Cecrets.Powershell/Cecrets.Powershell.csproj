@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Acklann.Cecrets</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Cecrets</Title>
+    <Description>A tool for sharing sensitive data across your projects.</Description>
+
+    <Version>0.0.7</Version>
+    <AssemblyVersion>0.0.7</AssemblyVersion>
+    <AssemblyFileVersion>0.0.7</AssemblyFileVersion>
+
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
+
+    <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/Ackara/Cecrets/blob/master/changelog.md</PackageReleaseNotes>
+
+    <Company>Ackara</Company>
+    <Authors>Ackara</Authors>
+    <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>$(MSBuildProjectDirectory)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
+    <PackageReference Include="XmlDoc2CmdletDoc" Version="0.4.0-dotnetcore0000">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cecrets\Cecrets.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Cecrets.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="$(AssemblyName).xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="UpdatePowershellManifest" BeforeTargets="PostBuildEvent">
+    <Exec Command="powershell -NoProfile -Command &quot;Update-ModuleManifest 'Cecrets.psd1' -RootModule '.\$(AssemblyName).dll' -ModuleVersion '$(Version)' -Description '$(Description)' -Copyright '$(Copyright)' -ProjectUri '$(PackageProjectUrl)' -CmdletsToExport '*' -FunctionsToExport '*' &quot;" WorkingDirectory="$(MSBuildThisFileDirectory)" />
+  </Target>
+
+  <Target Name="BuildPowershellModule" AfterTargets="Publish">
+    <ItemGroup>
+      <HelpFile Include="$(OutDir)\*.dll-Help.xml" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(HelpFile)" DestinationFolder="$(PublishDir)" Condition="Exists(@(HelpFile))" />
+  </Target>
+</Project>

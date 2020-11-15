@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cecrets", "src\Cecrets\Cecrets.csproj", "{C99F640D-8571-435D-BD0E-F8870B5BED62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets.Powershell", "src\Cecrets.Powershell\Cecrets.Powershell.csproj", "{B4730E4B-C663-4656-921C-86FEDB71A3E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets.MSBuild", "src\Cecrets.MSBuild\Cecrets.MSBuild.csproj", "{9FAC987E-EA93-4946-922D-17AE0E463004}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets.MSTest", "tests\Cecrets.MSTest\Cecrets.MSTest.csproj", "{790943E2-F7D7-496A-9D1E-7F09B117283C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{58C02D2D-75F8-40AF-B105-B9822ECBDE8B}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		build\manifest.json = build\manifest.json
+		build\tasks.psake.ps1 = build\tasks.psake.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".misc", ".misc", "{475C8DDA-AC41-4944-A2E1-CA2EFAF09ADF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		changelog.md = changelog.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FAC987E-EA93-4946-922D-17AE0E463004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FAC987E-EA93-4946-922D-17AE0E463004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FAC987E-EA93-4946-922D-17AE0E463004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FAC987E-EA93-4946-922D-17AE0E463004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{790943E2-F7D7-496A-9D1E-7F09B117283C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790943E2-F7D7-496A-9D1E-7F09B117283C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790943E2-F7D7-496A-9D1E-7F09B117283C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790943E2-F7D7-496A-9D1E-7F09B117283C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74049C31-C2C7-4209-B12A-372B3E000C3B}
+	EndGlobalSection
+EndGlobal
