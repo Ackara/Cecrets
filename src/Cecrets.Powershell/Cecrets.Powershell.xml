@@ -7,25 +7,33 @@
         <member name="T:Acklann.Cecrets.AddUserSecretCmdlet">
             <summary>
             <para type="synopsis">Add a foo</para>
+            <para type="description">Add a foo</para>
             </summary>
+            <example>
+            </example>
             <seealso cref="T:System.Management.Automation.Cmdlet" />
+        </member>
+        <member name="P:Acklann.Cecrets.AddUserSecretCmdlet.Key">
+            <summary>
+            Gets or sets the key.
+            <para type="description">A unique identifier.</para>
+            </summary>
         </member>
         <member name="P:Acklann.Cecrets.AddUserSecretCmdlet.Value">
             <summary>
             Gets or sets the value.
-            <para type="description"></para>
+            <para type="description">A value.</para>
             </summary>
-            <value>
-            The value.
-            </value>
         </member>
         <member name="P:Acklann.Cecrets.AddUserSecretCmdlet.Path">
             <summary>
             Gets or sets the path.
             </summary>
-            <value>
-            The path.
-            </value>
+        </member>
+        <member name="M:Acklann.Cecrets.AddUserSecretCmdlet.ProcessRecord">
+            <summary>
+            Processes the record.
+            </summary>
         </member>
     </members>
 </doc>
