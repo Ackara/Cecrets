@@ -1,73 +1,195 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Acklann.Cecrets
 {
     public class JsonEditor
     {
+        public static string GetValue(Stream stream, string key)
+        {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+
+            using (var streamReader = new StreamReader(stream))
+            using (var reader = new JsonTextReader(streamReader))
+            {
+                JObject document = JObject.Load(reader);
+                JToken value = document.SelectToken(key.Replace(':', '.'));
+                return value.ToString();
+            }
+        }
+
+        public static string GetValue(string sourceFile, string key)
+        {
+            if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+
+            using (var file = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                return GetValue(file, key);
+            }
+        }
+
+        public static void SetProperty(Stream inputStream, string key, object value)
+        {
+            if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), $"The {nameof(key)} cannot be null or whitespace.");
+
+            // Parsing the document.
+            JObject document;
+            using var baseReader = new StreamReader(inputStream);
+            using var reader = new JsonTextReader(baseReader);
+            document = JObject.Load(reader);
+
+            // Initializing variables.
+            string[] segments = key.Split(new char[] { '.', ':' }, StringSplitOptions.RemoveEmptyEntries);
+            if (segments.Length == 0) return;
+
+            var propertyNames = new Stack<string>(segments.Reverse());
+            JProperty property = null;
+
+            // Edit the document.
+            setvalue();
+
+            // Save the document.
+            inputStream.Seek(0, SeekOrigin.Begin);
+            using var writer = new JsonTextWriter(new StreamWriter(inputStream)) { Formatting = Formatting.Indented };
+            document.WriteTo(writer);
+            writer.Flush();
+
+            // ===== DONE ===== //
+
+            void setvalue()
+            {
+                string n = propertyNames.Pop();
+                JProperty next = findOrCreate(n);
+
+                if (propertyNames.Count == 0)
+                {
+                    next.Value = new JValue(value);
+                    return;
+                }
+                else
+                {
+                    property = next;
+                    setvalue();
+                }
+            }
+
+            JProperty findOrCreate(string n)
+            {
+                JProperty result;
+
+                // Trying to find the property
+                if (property == null) result = document.Property(n, StringComparison.InvariantCultureIgnoreCase);
+                else result = getChild(n);
+
+                // I did not find an existing property so I am creating one.
+                if (result == null)
+                {
+                    result = new JProperty(n, null);
+                    if (property == null) document.Add(result);
+                    else
+                    {
+                        if (property.Value.Type == JTokenType.Object)
+                        {
+                            var obj = (JObject)property.Value;
+                            obj.Add(result);
+                        }
+                        else
+                        {
+                            var obj = new JObject(result);
+                            property.Value = obj;
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            JProperty getChild(string name)
+            {
+                return (from token in property.Children()
+                        where token.Type == JTokenType.Property
+                        let prop = (JProperty)token
+                        where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
+                        select prop
+                       ).FirstOrDefault();
+            }
+        }
+
+        public static void SetProperty(string sourceFile, string key, object value)
+        {
+            if (string.IsNullOrEmpty(sourceFile)) throw new ArgumentNullException(nameof(sourceFile));
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+            CreateJsonFileIfNotExists(sourceFile);
+
+            using (Stream file = new FileStream(sourceFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
+            {
+                SetProperty(file, key, value);
+            }
+        }
+
+        public static void CopyProperty(Stream inputStream, Stream outputStream, string jpath)
+        {
+            if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
+            if (outputStream == null) throw new ArgumentNullException(nameof(outputStream));
+            if (string.IsNullOrEmpty(jpath)) return;
+
+            using var sourceReader = new JsonTextReader(new StreamReader(inputStream));
+            JObject source = JObject.Load(sourceReader);
+            JToken[] sourceValues = source.SelectTokens(jpath).ToArray();
+            if ((sourceValues?.Length ?? 0) == 0) return;
+
+            using var outputReader = new JsonTextReader(new StreamReader(outputStream));
+            var tmp = JToken.Load(outputReader);
+            JObject destination = (tmp.Type == JTokenType.Object ? (JObject)tmp : new JObject());
+
+            JToken target; JProperty property;
+            foreach (JToken token in sourceValues)
+            {
+                property = (JProperty)token.Parent;
+                target = destination.SelectToken(property.Name);
+                if (target == null) destination.Add(property);
+                else (target.Parent as JProperty).Value = token;
+            }
+
+            outputStream.Seek(0, SeekOrigin.Begin);
+            using var outputWriter = new StreamWriter(outputStream);
+            outputWriter.Write(destination.ToString(Formatting.Indented));
+            outputWriter.Flush();
+        }
+
         public static void CopyProperty(string sourceFile, string destinationFile, string jpath)
         {
             if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
             if (string.IsNullOrEmpty(destinationFile)) throw new ArgumentNullException(nameof(destinationFile));
-            if (string.IsNullOrEmpty(jpath)) return;
+            CreateJsonFileIfNotExists(destinationFile);
 
-            JProperty sourceProperty;
-            using (var stream = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var reader = new JsonTextReader(new StreamReader(stream)))
+            using (Stream input = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (Stream output = new FileStream(destinationFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
-                JObject source = JObject.Load(reader);
-                sourceProperty = (JProperty)source.SelectToken(jpath).Parent;
+                CopyProperty(input, output, jpath);
             }
+        }
 
-            if (!File.Exists(destinationFile))
+        #region Backing Members
+
+        private static void CreateJsonFileIfNotExists(string filePath)
+        {
+            if (!File.Exists(filePath))
             {
-                string folder = Path.GetDirectoryName(destinationFile);
+                string folder = Path.GetDirectoryName(filePath);
                 if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
-                File.WriteAllText(destinationFile, "{}", System.Text.Encoding.UTF8);
-            }
-
-            JObject destination;
-            using (var stream = new FileStream(destinationFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (var reader = new JsonTextReader(new StreamReader(stream)))
-            {
-                destination = JObject.Load(reader);
-
-                int index = jpath.LastIndexOf('.') + 1;
-                string p = jpath.Substring(index, jpath.Length - index);
-                JToken target = destination.SelectToken(p);
-                if (target == null)
-                {
-                    destination.Add(sourceProperty);
-                }
-                else
-                {
-                    (target.Parent as JProperty).Value = sourceProperty.Value;
-                }
-            }
-
-            using (var stream = new FileStream(destinationFile, FileMode.Create, FileAccess.Write, FileShare.Read))
-            using (var writer = new StreamWriter(stream))
-            {
-                writer.Write(destination.ToString(Formatting.Indented));
-                writer.Flush();
+                File.WriteAllText(filePath, "{}", Encoding.UTF8);
             }
         }
 
-        public static void AddProperty(string sourceFile, string key, string value)
-        {
-            if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
-
-            throw new System.NotImplementedException();
-        }
-
-        public static string GetValue(string key)
-        {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
-
-            throw new System.NotImplementedException();
-        }
+        #endregion Backing Members
     }
 }

@@ -13,12 +13,16 @@ Push-Location $PSScriptRoot;
 
 # ==========
 
-Describe "Add-UserSecret"{
-	Add-UserSecret ""
+Describe "Set-Secret"{
+	$sourceFile = Join-Path ([IO.Path]::GetTempPath()) "cecrets-powershell-test.json";
+	if (Test-Path $sourceFile) { Remove-Item $sourceFile -Force; }
 
-	It "foo"{
+	Set-Secret -k "a" -v "this is a value" -Path $sourceFile;
+
+	It "Can set json value" {
+		$sourceFile | Should Exist;
 	}
 }
 
 Pop-Location;
-Remove-Module $module.FullName -Force;
+Remove-Module $module.FullName -Force -ErrorAction Ignore;

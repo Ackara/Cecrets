@@ -2,15 +2,16 @@
   <PropertyGroup>
     <RootNamespace>Acklann.Cecrets</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
-    
-    <Version>0.0.7</Version>
-    <AssemblyVersion>0.0.7</AssemblyVersion>
-    <AssemblyFileVersion>0.0.7</AssemblyFileVersion>
+
+    <Version>0.0.8</Version>
+    <AssemblyVersion>0.0.8</AssemblyVersion>
+    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
@@ -21,7 +22,11 @@
 
     <Authors>Ackara</Authors>
     <Company>Ackara</Company>
+    <Owners>$(Company)</Owners>
     <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

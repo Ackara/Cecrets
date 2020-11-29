@@ -26,7 +26,7 @@ Properties {
 
 Task "Default" -depends @("compile", "test", "pack");
 
-Task "Publish" -depends @("clean", "version", "compile", "test", "pack", "push-nuget", "tag") `
+Task "Publish" -depends @("clean", "compile", "test", "pack", "push-nuget") `
 -description "This task compiles, test then publish all packages to their respective destination.";
 
 # ======================================================================
@@ -71,20 +71,20 @@ Task "Package-Solution" -alias "pack" -description "This task generates all depl
 	[string]$package = Join-Path $ArtifactsFolder "";
 	[string]$tempPath = Join-Path $SolutionFolder "src/$SolutionName/obj/msbuild";
 	$project = Join-Path $SolutionFolder "src/*.MSBuild/*.*proj" | Get-Item;
-	Write-Separator "dotnet build '$($project.BaseName)'";
-	Exec { &dotnet build $project.FullName --configuration $Configuration --output $tempPath; }
-	
+	Write-Separator "dotnet publish '$($project.BaseName)'";
+	Exec { &dotnet publish $project.FullName --configuration $Configuration --output $tempPath; }
+
 	$project = Join-Path $SolutionFolder "src/$SolutionName/*.*proj"  | Get-Item;
 	Write-Separator "dotnet pack '$($project.BaseName)'";
 	Exec { &dotnet pack $project.FullName --configuration $Configuration --output $ArtifactsFolder -p:"Version=$version"; }
-	
+
 	if (Test-Path $tempPath) { Remove-Item $tempPath -Recurse -Force; }
-	
+
 	[string]$nupkg = Join-Path $ArtifactsFolder "*.nupkg" | Resolve-Path;
 	$tempPath = [IO.Path]::ChangeExtension($nupkg, ".zip");
 	Copy-Item $nupkg -Destination $tempPath;
-	Expand-Archive $tempPath -DestinationPath "$ArtifactsFolder\msbuild";
-	
+	Expand-Archive $tempPath -DestinationPath "$ArtifactsFolder\msbuild" -Force;
+
 	if (Test-Path $tempPath) { Remove-Item $tempPath -Recurse -Force; }
 
 	# --- Powershell Module ---
@@ -109,16 +109,22 @@ Task "Publish-NuGet-Packages" -alias "push-nuget" -description "This task publis
     }
 }
 
-Task "Publish-VSIX-Package" -alias "push-vsix" -description "This task publish all VSIX packages to https://marketplace.visualstudio.com/" `
+Task "Publish-PowershellModule" -alias "push-ps" -description "This task publish all powershell modules." `
 -precondition { return ($InProduction -or $InPreview ) -and (Test-Path $ArtifactsFolder -PathType Container) } `
 -action {
-	[string]$vsixPublisher = Join-Path "$($env:ProgramFiles)*" "Microsoft Visual Studio\*\*\VSSDK\VisualStudioIntegration\Tools\Bin\VsixPublisher.exe" | Resolve-Path -ErrorAction Stop;
-	$package = Join-Path $ArtifactsFolder "*.vsix" | Get-Item;
-	$manifest = Join-Path $PSScriptRoot "publishing/visual-studio-marketplace.json" | Get-Item;
-	$pat = Get-Secret "VISUAL_STUDIO_MARKETPLACE_PAT" "vsixMarketplace";
-
-	Write-Separator "VsixPublish publish -payload '$($package.Name)'";
-	Exec { &$vsixPublisher publish -payload $package.FullName -publishManifest $manifest.FullName -personalAccessToken $pat -ignoreWarnings "VSIXValidatorWarning01,VSIXValidatorWarning02"; }
+	foreach ($module in (Join-Path $ArtifactsFolder "powershell/*" | Resolve-Path | Get-ChildItem -Filter "*.psd1"))
+	{
+		if (Test-ModuleManifest $module.FullName)
+		{
+			try
+			{
+				$secrets = Get-Secret "psGalleryKey" "POWERSHELL_GALLERY_KEY";
+				Push-Location $module.DirectoryName;
+				Publish-Module -Path $PWD -NuGetApiKey $secrets;
+			}
+			finally { Pop-Location; }
+		}
+	}
 }
 
 Task "Add-GitReleaseTag" -alias "tag" -description "This task tags the lastest commit with the version number." `

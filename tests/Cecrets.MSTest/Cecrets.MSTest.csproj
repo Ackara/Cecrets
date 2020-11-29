@@ -2,33 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <TestTask>..\..\artifacts\msbuild\build\cecrets.targets</TestTask>
 
     <RootNamespace>Acklann.Cecrets</RootNamespace>
-  
-<Version>0.0.7</Version>
-<AssemblyVersion>0.0.7</AssemblyVersion>
-<AssemblyFileVersion>0.0.7</AssemblyFileVersion>
-<PackageIcon>icon.png</PackageIcon>
-<RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
-<PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
-<PackageReleaseNotes>https://github.com/Ackara/Cecrets/blob/master/changelog.md</PackageReleaseNotes>
-<Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
-<PackageLicenseFile>license.txt</PackageLicenseFile>
+    <Version>0.0.8</Version>
+    <AssemblyVersion>0.0.8</AssemblyVersion>
+    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/Ackara/Cecrets/blob/master/changelog.md</PackageReleaseNotes>
+    <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+    <PackageLicenseFile>license.txt</PackageLicenseFile>
 
-<Title>Cecrets</Title>
-<Company>Ackara</Company>
+    <Title>Cecrets</Title>
+    <Company>Ackara</Company>
 
-<Description>A tool for sharing sensitive data across your projects.</Description>
-<Authors>Ackara</Authors>
-</PropertyGroup>
+    <Description>A tool for sharing sensitive data across your projects.</Description>
+    <Authors>Ackara</Authors>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.4.4" />
     <PackageReference Include="AutoBogus.Conventions" Version="2.12.0" />
-    <PackageReference Include="AutoBogus.FakeItEasy" Version="2.12.0" />
-    <PackageReference Include="FakeItEasy" Version="6.2.1" />
+    <PackageReference Include="JustMock" Version="2020.3.1124.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
@@ -53,10 +51,10 @@
     <Folder Include="approved-results\" />
   </ItemGroup>
 
+  <Target Name="Test">
+    <Message Text="The target file exist!" Importance="high" Condition="Exists($(TestTask))" />
+    <CopyJsonProperty JPath="nugetKey" SourceFile="..\..\secrets.json" />
+  </Target>
 
-
-
-
-
-
+  <Import Project="$(TestTask)" Condition="Exists('$(TestTask)')" />
 </Project>

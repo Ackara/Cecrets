@@ -1,0 +1,6 @@
+{
+  "datastore": {
+    "main": "server=;user=;password=;",
+    "auth": "server=;user=;password=;"
+  }
+}

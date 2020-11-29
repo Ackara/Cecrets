@@ -2,6 +2,9 @@ using System;
 using System.IO;
 using System.Linq;
 
+[assembly: ApprovalTests.Namers.UseApprovalSubdirectory("../approved-results")]
+[assembly: ApprovalTests.Reporters.UseReporter(typeof(ApprovalTests.Reporters.DiffReporter))]
+
 namespace Acklann.Cecrets
 {
     public class TestData

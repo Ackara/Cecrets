@@ -1,0 +1,9 @@
+{
+  "nugetKey": "278283fc-9dd1-469a-82f0-c1ad61e2336c",
+  "local": {
+    "datastore": {
+      "main": "server=;user=;password=;",
+      "auth": "server=;user=;password=;"
+    }
+  }
+}

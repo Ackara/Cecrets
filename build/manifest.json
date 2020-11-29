@@ -9,12 +9,15 @@
   "website": "https://github.com/{company}/{name}",
   "repository": "https://github.com/{company}/{name}.git",
   "releaseNotes": "https://github.com/{company}/{name}/blob/master/changelog.md",
-  "version": {
+  "tags": "user, secrets",
+  "version":
+  {
     "major": 0,
     "minor": 0,
-    "patch": 7
+    "patch": 8
   },
-  "branchVersionMap": {
+  "branchVersionMap":
+  {
     "production": "C",
     "default": "x.y.z-\\beta"
   }

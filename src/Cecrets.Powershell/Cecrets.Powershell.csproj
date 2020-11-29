@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,9 +9,9 @@
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>0.0.7</Version>
-    <AssemblyVersion>0.0.7</AssemblyVersion>
-    <AssemblyFileVersion>0.0.7</AssemblyFileVersion>
+    <Version>0.0.8</Version>
+    <AssemblyVersion>0.0.8</AssemblyVersion>
+    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
