@@ -9,9 +9,9 @@
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>0.0.8</Version>
-    <AssemblyVersion>0.0.8</AssemblyVersion>
-    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
+    <Version>0.0.10</Version>
+    <AssemblyVersion>0.0.10</AssemblyVersion>
+    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
 
     <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
@@ -23,7 +23,9 @@
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
-  </PropertyGroup>
+  
+<PackageTags>user, secrets</PackageTags>
+</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="16.8.0" />
@@ -32,4 +34,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Cecrets\Cecrets.csproj" />
   </ItemGroup>
+
+
 </Project>

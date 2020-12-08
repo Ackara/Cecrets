@@ -10,14 +10,12 @@
   "repository": "https://github.com/{company}/{name}.git",
   "releaseNotes": "https://github.com/{company}/{name}/blob/master/changelog.md",
   "tags": "user, secrets",
-  "version":
-  {
+  "version": {
     "major": 0,
     "minor": 0,
-    "patch": 8
+    "patch": 10
   },
-  "branchVersionMap":
-  {
+  "branchVersionMap": {
     "production": "C",
     "default": "x.y.z-\\beta"
   }

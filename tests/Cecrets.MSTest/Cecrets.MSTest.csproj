@@ -6,9 +6,9 @@
     <TestTask>..\..\artifacts\msbuild\build\cecrets.targets</TestTask>
 
     <RootNamespace>Acklann.Cecrets</RootNamespace>
-    <Version>0.0.8</Version>
-    <AssemblyVersion>0.0.8</AssemblyVersion>
-    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
+    <Version>0.0.10</Version>
+    <AssemblyVersion>0.0.10</AssemblyVersion>
+    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
@@ -21,7 +21,9 @@
 
     <Description>A tool for sharing sensitive data across your projects.</Description>
     <Authors>Ackara</Authors>
-  </PropertyGroup>
+  
+<PackageTags>user, secrets</PackageTags>
+</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.4.4" />
@@ -57,4 +59,6 @@
   </Target>
 
   <Import Project="$(TestTask)" Condition="Exists('$(TestTask)')" />
+
+
 </Project>

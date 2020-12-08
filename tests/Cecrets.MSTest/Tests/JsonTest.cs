@@ -90,6 +90,7 @@ namespace Acklann.Cecrets.Tests
             yield return new object[] { new string[] { "a", "b", "c" } };
             yield return new object[] { new string[] { "a", "a.b", "a.c" } };
             yield return new object[] { new string[] { "d", "d" } };
+            yield return new object[] { new string[] { "a.b.c", "a.b.d", "a.b.e", "x.y.z", "x.y.w" } };
         }
 
         private static IEnumerable<object[]> GetJPaths()

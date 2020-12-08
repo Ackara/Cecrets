@@ -87,6 +87,12 @@ Task "Package-Solution" -alias "pack" -description "This task generates all depl
 
 	if (Test-Path $tempPath) { Remove-Item $tempPath -Recurse -Force; }
 
+	# --- Dotnet CLI ---
+
+	$project = Join-Path $SolutionFolder "src/*.CLI/*.*proj" | Get-Item;
+	Write-Separator "dotnet publish '$($project.Basename)'";
+	Exec { &dotnet pack $project.FullName --configuration $Configuration --output $ArtifactsFolder; }
+
 	# --- Powershell Module ---
 
 	[string]$package = Join-Path $ArtifactsFolder "powershell\$SolutionName";
@@ -112,6 +118,8 @@ Task "Publish-NuGet-Packages" -alias "push-nuget" -description "This task publis
 Task "Publish-PowershellModule" -alias "push-ps" -description "This task publish all powershell modules." `
 -precondition { return ($InProduction -or $InPreview ) -and (Test-Path $ArtifactsFolder -PathType Container) } `
 -action {
+    #ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls13;
 	foreach ($module in (Join-Path $ArtifactsFolder "powershell/*" | Resolve-Path | Get-ChildItem -Filter "*.psd1"))
 	{
 		if (Test-ModuleManifest $module.FullName)

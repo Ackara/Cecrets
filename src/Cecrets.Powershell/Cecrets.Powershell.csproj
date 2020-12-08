@@ -3,15 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Acklann.Cecrets</RootNamespace>
-  </PropertyGroup>
+  
+<PackageTags>user, secrets</PackageTags>
+</PropertyGroup>
 
   <PropertyGroup>
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>0.0.8</Version>
-    <AssemblyVersion>0.0.8</AssemblyVersion>
-    <AssemblyFileVersion>0.0.8</AssemblyFileVersion>
+    <Version>0.0.10</Version>
+    <AssemblyVersion>0.0.10</AssemblyVersion>
+    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
@@ -63,4 +65,6 @@
 
     <Copy SourceFiles="@(HelpFile)" DestinationFolder="$(PublishDir)" Condition="Exists(@(HelpFile))" />
   </Target>
+
+
 </Project>

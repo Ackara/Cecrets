@@ -13,7 +13,7 @@ namespace Acklann.Cecrets
         public static string GetValue(Stream stream, string key)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+            if (string.IsNullOrEmpty(key)) return null;
 
             using (var streamReader = new StreamReader(stream))
             using (var reader = new JsonTextReader(streamReader))
@@ -27,7 +27,7 @@ namespace Acklann.Cecrets
         public static string GetValue(string sourceFile, string key)
         {
             if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+            if (string.IsNullOrEmpty(key)) return null;
 
             using (var file = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -68,6 +68,7 @@ namespace Acklann.Cecrets
             {
                 string n = propertyNames.Pop();
                 JProperty next = findOrCreate(n);
+                System.Diagnostics.Debug.WriteLine($"current: ${next.Name}");
 
                 if (propertyNames.Count == 0)
                 {
@@ -114,7 +115,7 @@ namespace Acklann.Cecrets
 
             JProperty getChild(string name)
             {
-                return (from token in property.Children()
+                return (from token in property.Value.Children()
                         where token.Type == JTokenType.Property
                         let prop = (JProperty)token
                         where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
