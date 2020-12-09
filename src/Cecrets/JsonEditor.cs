@@ -19,8 +19,8 @@ namespace Acklann.Cecrets
             using (var reader = new JsonTextReader(streamReader))
             {
                 JObject document = JObject.Load(reader);
-                JToken value = document.SelectToken(key.Replace(':', '.'));
-                return value.ToString();
+                JToken value = document?.SelectToken(key.Replace(':', '.'));
+                return value?.ToString();
             }
         }
 

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Acklann.Cecrets.MSBuild
 {
-    public class CopyJsonProperty : ITask
+    public class CopyJsonProperties : ITask
     {
         [Required]
         public string JPath { get; set; }
@@ -24,7 +24,7 @@ namespace Acklann.Cecrets.MSBuild
             {
                 JsonEditor.CopyProperty(src, dest, path);
                 BuildEngine.LogMessageEvent(new BuildMessageEventArgs(
-                    $"Copied  '{Path.GetFileName(src)}':'{path}' property to '{Path.GetFileName(dest)}'", null, nameof(CopyJsonProperty), MessageImportance.Normal));
+                    $"Copied  '{Path.GetFileName(src)}':'{path}' property to '{Path.GetFileName(dest)}'", null, nameof(CopyJsonProperties), MessageImportance.Normal));
             }
 
             return true;

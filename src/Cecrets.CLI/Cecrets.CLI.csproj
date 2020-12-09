@@ -8,9 +8,9 @@
 
   <PropertyGroup>
     <Title>Cecrets</Title>
-    <Version>0.0.10</Version>
-    <AssemblyVersion>0.0.10</AssemblyVersion>
-    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
+    <Version>0.0.12</Version>
+    <AssemblyVersion>0.0.12</AssemblyVersion>
+    <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
     <PackageIcon>icon.png</PackageIcon>

@@ -6,9 +6,9 @@
     <TestTask>..\..\artifacts\msbuild\build\cecrets.targets</TestTask>
 
     <RootNamespace>Acklann.Cecrets</RootNamespace>
-    <Version>0.0.10</Version>
-    <AssemblyVersion>0.0.10</AssemblyVersion>
-    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
+    <Version>0.0.12</Version>
+    <AssemblyVersion>0.0.12</AssemblyVersion>
+    <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
@@ -55,7 +55,7 @@
 
   <Target Name="Test">
     <Message Text="The target file exist!" Importance="high" Condition="Exists($(TestTask))" />
-    <CopyJsonProperty JPath="nugetKey" SourceFile="..\..\secrets.json" />
+    <CopyJsonProperties JPath="nugetKey" SourceFile="..\..\secrets.json" />
   </Target>
 
   <Import Project="$(TestTask)" Condition="Exists('$(TestTask)')" />

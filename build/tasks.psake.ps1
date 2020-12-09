@@ -76,6 +76,7 @@ Task "Package-Solution" -alias "pack" -description "This task generates all depl
 
 	$project = Join-Path $SolutionFolder "src/$SolutionName/*.*proj"  | Get-Item;
 	Write-Separator "dotnet pack '$($project.BaseName)'";
+	#Exec { &dotnet pack $project.FullName --configuration $Configuration --output $ArtifactsFolder -p:"Version=$version"; }
 	Exec { &dotnet pack $project.FullName --configuration $Configuration --output $ArtifactsFolder -p:"Version=$version"; }
 
 	if (Test-Path $tempPath) { Remove-Item $tempPath -Recurse -Force; }

@@ -35,7 +35,7 @@ namespace Acklann.Cecrets.Tests
             Mock.Arrange(() => destinationFile.GetMetadata("FullPath"))
                 .Returns(resultFile);
 
-            var sut = new MSBuild.CopyJsonProperty
+            var sut = new MSBuild.CopyJsonProperties
             {
                 BuildEngine = mockEngine,
                 HostObject = mockHost,

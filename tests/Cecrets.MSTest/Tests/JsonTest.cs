@@ -73,11 +73,18 @@ namespace Acklann.Cecrets.Tests
             var result1 = JsonEditor.GetValue(sourceFile, "nugetKey");
             var result2 = JsonEditor.GetValue(sourceFile, "local:datastore:auth");
             var result3 = JsonEditor.GetValue(sourceFile, "local:datastore:main");
+            var result4 = JsonEditor.GetValue(sourceFile, "invaild");
 
             // Assert
             result1.ShouldNotBeNullOrEmpty();
             result2.ShouldNotBeNullOrEmpty();
             result3.ShouldNotBeNullOrEmpty();
+            result4.ShouldBeNullOrEmpty();
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
         }
 
         #region Backing Members

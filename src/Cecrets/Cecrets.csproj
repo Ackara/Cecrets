@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <RootNamespace>Acklann.Cecrets</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-  
-<PackageTags>user, secrets</PackageTags>
-</PropertyGroup>
+
+    <PackageTags>user, secrets</PackageTags>
+  </PropertyGroup>
 
   <PropertyGroup>
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>0.0.10</Version>
-    <AssemblyVersion>0.0.10</AssemblyVersion>
-    <AssemblyFileVersion>0.0.10</AssemblyFileVersion>
+    <Version>0.0.12</Version>
+    <AssemblyVersion>0.0.12</AssemblyVersion>
+    <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
@@ -27,8 +27,9 @@
     <Owners>$(Company)</Owners>
     <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
 
-    
-    <PackageType>DotnetTool</PackageType>
+    <!--<IsTool>true</IsTool>-->
+    <!--<PackageType>DotnetTool</PackageType>-->
+    <BuildOutputTargetFolder>tools</BuildOutputTargetFolder>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
@@ -58,6 +59,4 @@
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
-
-
 </Project>
