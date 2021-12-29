@@ -10,6 +10,53 @@ namespace Acklann.Cecrets
 {
     public class JsonEditor
     {
+        public static void CopyProperty(string sourceFile, string destinationFile, string jpath)
+        {
+            if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
+            if (string.IsNullOrEmpty(destinationFile)) throw new ArgumentNullException(nameof(destinationFile));
+            CreateJsonFileIfNotExists(destinationFile);
+
+            Stream result;
+            using (Stream input = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (Stream output = new FileStream(destinationFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                result = CopyProperty(input, output, jpath);
+            }
+
+            if (result != null)
+                using (Stream output = new FileStream(destinationFile, FileMode.Open, FileAccess.Write, FileShare.Read))
+                {
+                    result.CopyTo(output);
+                }
+        }
+
+        public static Stream CopyProperty(Stream inputStream, Stream outputStream, string jpath)
+        {
+            if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
+            if (outputStream == null) throw new ArgumentNullException(nameof(outputStream));
+            if (string.IsNullOrEmpty(jpath)) return null;
+
+            using var sourceReader = new JsonTextReader(new StreamReader(inputStream));
+            JObject source = JObject.Load(sourceReader);
+            JToken[] sourceValues = source.SelectTokens(jpath).ToArray();
+            if ((sourceValues?.Length ?? 0) == 0) return null;
+            
+            JObject destination;
+            using var outputReader = new JsonTextReader(new StreamReader(outputStream));
+            try { destination = JObject.Load(outputReader); } catch { destination = new JObject(); }
+
+            JToken target; JProperty property;
+            foreach (JToken token in sourceValues)
+            {
+                property = (JProperty)token.Parent;
+                target = destination.SelectToken(property.Name);
+                if (target == null) destination.Add(property);
+                else (target.Parent as JProperty).Value = token;
+            }
+
+            return new MemoryStream(Encoding.UTF8.GetBytes(destination.ToString()));
+        }
+
         public static string GetValue(Stream stream, string key)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
@@ -133,49 +180,6 @@ namespace Acklann.Cecrets
             using (Stream file = new FileStream(sourceFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
                 SetProperty(file, key, value);
-            }
-        }
-
-        public static void CopyProperty(Stream inputStream, Stream outputStream, string jpath)
-        {
-            if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
-            if (outputStream == null) throw new ArgumentNullException(nameof(outputStream));
-            if (string.IsNullOrEmpty(jpath)) return;
-
-            using var sourceReader = new JsonTextReader(new StreamReader(inputStream));
-            JObject source = JObject.Load(sourceReader);
-            JToken[] sourceValues = source.SelectTokens(jpath).ToArray();
-            if ((sourceValues?.Length ?? 0) == 0) return;
-
-            using var outputReader = new JsonTextReader(new StreamReader(outputStream));
-            var tmp = JToken.Load(outputReader);
-            JObject destination = (tmp.Type == JTokenType.Object ? (JObject)tmp : new JObject());
-
-            JToken target; JProperty property;
-            foreach (JToken token in sourceValues)
-            {
-                property = (JProperty)token.Parent;
-                target = destination.SelectToken(property.Name);
-                if (target == null) destination.Add(property);
-                else (target.Parent as JProperty).Value = token;
-            }
-
-            outputStream.Seek(0, SeekOrigin.Begin);
-            using var outputWriter = new StreamWriter(outputStream);
-            outputWriter.Write(destination.ToString(Formatting.Indented));
-            outputWriter.Flush();
-        }
-
-        public static void CopyProperty(string sourceFile, string destinationFile, string jpath)
-        {
-            if (!File.Exists(sourceFile)) throw new FileNotFoundException($"Could not find file at '{sourceFile}'.");
-            if (string.IsNullOrEmpty(destinationFile)) throw new ArgumentNullException(nameof(destinationFile));
-            CreateJsonFileIfNotExists(destinationFile);
-
-            using (Stream input = new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-            using (Stream output = new FileStream(destinationFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
-            {
-                CopyProperty(input, output, jpath);
             }
         }
 

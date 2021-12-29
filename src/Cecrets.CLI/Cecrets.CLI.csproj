@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Tekcari.Cecrets</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
     <Title>Cecrets</Title>
-    <Version>0.0.12</Version>
-    <AssemblyVersion>0.0.12</AssemblyVersion>
-    <AssemblyFileVersion>0.0.12</AssemblyFileVersion>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <AssemblyFileVersion>2.0.0</AssemblyFileVersion>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
     <PackageIcon>icon.png</PackageIcon>
@@ -20,7 +20,7 @@
     <PackageTags>user, secrets</PackageTags>
     <Authors>Ackara</Authors>
     <Company>Ackara</Company>
-    <Copyright>Copyright 2020 Ackara, All Rights Reserved.</Copyright>
+    <Copyright>Copyright 2021 Ackara, All Rights Reserved.</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 

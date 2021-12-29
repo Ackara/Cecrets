@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30709.132
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets", "src\Cecrets\Cecrets.csproj", "{C99F640D-8571-435D-BD0E-F8870B5BED62}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets.Powershell", "src\Cecrets.Powershell\Cecrets.Powershell.csproj", "{B4730E4B-C663-4656-921C-86FEDB71A3E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cecrets.MSBuild", "src\Cecrets.MSBuild\Cecrets.MSBuild.csproj", "{9FAC987E-EA93-4946-922D-17AE0E463004}"
 EndProject
@@ -38,10 +36,6 @@ Global
 		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C99F640D-8571-435D-BD0E-F8870B5BED62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B4730E4B-C663-4656-921C-86FEDB71A3E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FAC987E-EA93-4946-922D-17AE0E463004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FAC987E-EA93-4946-922D-17AE0E463004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FAC987E-EA93-4946-922D-17AE0E463004}.Release|Any CPU.ActiveCfg = Release|Any CPU

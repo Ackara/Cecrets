@@ -82,11 +82,6 @@ namespace Acklann.Cecrets.Tests
             result4.ShouldBeNullOrEmpty();
         }
 
-        [TestMethod]
-        public void MyTestMethod()
-        {
-        }
-
         #region Backing Members
 
         private static readonly string _currentWorkingDirectory = Path.Combine(Path.GetTempPath(), nameof(Cecrets));

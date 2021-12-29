@@ -11,9 +11,9 @@
   "releaseNotes": "https://github.com/{company}/{name}/blob/master/changelog.md",
   "tags": "user, secrets",
   "version": {
-    "major": 0,
+    "major": 2,
     "minor": 0,
-    "patch": 12
+    "patch": 0
   },
   "branchVersionMap": {
     "production": "C",
