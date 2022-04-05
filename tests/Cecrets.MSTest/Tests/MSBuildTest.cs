@@ -60,5 +60,36 @@ namespace Acklann.Cecrets.Tests
             sourceFile.AssertAll();
             mockEngine.AssertAll();
         }
+
+        [TestMethod]
+        public void Can_invoke_SetJsonProperty_task()
+        {
+            // Arrange
+
+            string testFile = Path.Combine(Path.GetTempPath(), "set-prop-test.json");
+            if (File.Exists(testFile)) File.Delete(testFile);
+            File.WriteAllText(testFile, "{ \"data\": { \"id\": null }}");
+
+            var sourceFile = Mock.Create<ITaskItem>();
+            Mock.Arrange(() => sourceFile.GetMetadata("FullPath"))
+                .Returns(testFile)
+                .OccursAtLeast(1);
+
+            var sut = new MSBuild.SetJsonProperty
+            {
+                SourceFile = sourceFile,
+                JPath = "data.id",
+                Value = "abc"
+            };
+
+            // Act
+
+            var ok = sut.Execute();
+
+            // Assert
+
+            ok.ShouldBeTrue();
+            Approvals.VerifyFile(testFile);
+        }
     }
 }
