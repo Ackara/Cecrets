@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Acklann.Cecrets
 {
@@ -40,7 +41,7 @@ namespace Acklann.Cecrets
             JObject source = JObject.Load(sourceReader);
             JToken[] sourceValues = source.SelectTokens(jpath).ToArray();
             if ((sourceValues?.Length ?? 0) == 0) return null;
-            
+
             JObject destination;
             using var outputReader = new JsonTextReader(new StreamReader(outputStream));
             try { destination = JObject.Load(outputReader); } catch { destination = new JObject(); }
@@ -86,6 +87,7 @@ namespace Acklann.Cecrets
         {
             if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), $"The {nameof(key)} cannot be null or whitespace.");
+            var arrayReg = new Regex(@"\[(?<index>\d+)\]");
 
             // Parsing the document.
             JObject document;
@@ -162,12 +164,30 @@ namespace Acklann.Cecrets
 
             JProperty getChild(string name)
             {
-                return (from token in property.Value.Children()
-                        where token.Type == JTokenType.Property
-                        let prop = (JProperty)token
-                        where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
-                        select prop
-                       ).FirstOrDefault();
+                Match match = arrayReg.Match(name);
+                if (match.Success)
+                {
+                    name = arrayReg.Replace(name, string.Empty);
+                    int index = int.Parse(match.Groups["index"].Value);
+
+                    JProperty p = (from token in property.Value.Children()
+                                   where token.Type == JTokenType.Property
+                                   let prop = (JProperty)token
+                                   where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
+                                   select prop
+                                   ).FirstOrDefault();
+                    
+                    throw new System.NotImplementedException();
+                }
+                else
+                {
+                    return (from token in property.Value.Children()
+                            where token.Type == JTokenType.Property
+                            let prop = (JProperty)token
+                            where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
+                            select prop
+                           ).FirstOrDefault();
+                }
             }
         }
 

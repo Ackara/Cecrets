@@ -45,14 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="test-data\config1.json">
+    <None Update="test-data\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="approved-results\" />
-  </ItemGroup>
 
   <Target Name="Test">
     <Message Text="The target file exist!" Importance="high" Condition="Exists($(TestTask))" />

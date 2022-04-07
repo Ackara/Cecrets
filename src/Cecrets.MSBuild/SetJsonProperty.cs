@@ -1,4 +1,5 @@
 using Microsoft.Build.Framework;
+using Newtonsoft.Json.Linq;
 using System.IO;
 
 namespace Acklann.Cecrets.MSBuild
@@ -17,6 +18,15 @@ namespace Acklann.Cecrets.MSBuild
         public bool Execute()
         {
             string filePath = SourceFile.GetMetadata("FullPath");
+
+            var document = JObject.Parse(File.ReadAllText(filePath));
+            var f = document.SelectToken(JPath, false);
+
+            //if (document.SelectToken(JPath) is JProperty prop)
+            //{
+            //    prop.Value = Value;
+            //    File.WriteAllText(filePath, document.ToString());
+            //}
             JsonEditor.SetProperty(filePath, JPath, Value);
             BuildEngine?.LogMessageEvent(new BuildMessageEventArgs(
                     $"Set '{JPath}' in {Path.GetFileName(filePath)}.", null, nameof(SetJsonProperty), MessageImportance.Normal));
