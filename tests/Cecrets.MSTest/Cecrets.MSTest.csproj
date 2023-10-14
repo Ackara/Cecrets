@@ -21,9 +21,9 @@
 
     <Description>A tool for sharing sensitive data across your projects.</Description>
     <Authors>Ackara</Authors>
-  
-<PackageTags>user, secrets</PackageTags>
-</PropertyGroup>
+
+    <PackageTags>user, secrets</PackageTags>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ApprovalTests" Version="5.7.1" />
