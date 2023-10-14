@@ -11,9 +11,9 @@
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
-    <AssemblyFileVersion>2.0.0</AssemblyFileVersion>
+    <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
+    <AssemblyFileVersion>2.0.1</AssemblyFileVersion>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
@@ -24,7 +24,7 @@
 
     <Company>Ackara</Company>
     <Authors>Ackara</Authors>
-    <Copyright>Copyright 2021 Ackara, All Rights Reserved.</Copyright>
+    <Copyright>Copyright 2022 Ackara, All Rights Reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>

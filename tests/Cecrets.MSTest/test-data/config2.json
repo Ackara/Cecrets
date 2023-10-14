@@ -1,0 +1,28 @@
+{
+  "Serilog":
+  {
+    "MinimumLevel":
+    {
+      "Default": "Information",
+      "Override":
+      {
+        "Microsoft": "Warning",
+        "System": "Warning",
+        "Serilog": "Information"
+      }
+    },
+    "Properties":
+    {
+    },
+    "WriteTo":
+    [
+      {
+        "Name": "Seq",
+        "Args":
+        {
+          "serverUrl": "http://localhost:5341"
+        }
+      }
+    ]
+  }
+}

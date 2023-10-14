@@ -36,9 +36,28 @@ namespace Acklann.Cecrets.Tests
             Approvals.Verify(File.ReadAllText(resultFilePath));
         }
 
+        [TestMethod]
+        public void Can_get_json_value()
+        {
+            // Arrange
+            var sourceFile = TestData.GetFile("config1.json");
+
+            // Act
+            var result1 = JsonEditor.GetValue(sourceFile, "nugetKey");
+            var result2 = JsonEditor.GetValue(sourceFile, "local:datastore:auth");
+            var result3 = JsonEditor.GetValue(sourceFile, "local:datastore:main");
+            var result4 = JsonEditor.GetValue(sourceFile, "invaild");
+
+            // Assert
+            result1.ShouldNotBeNullOrEmpty();
+            result2.ShouldNotBeNullOrEmpty();
+            result3.ShouldNotBeNullOrEmpty();
+            result4.ShouldBeNullOrEmpty();
+        }
+
         [DataTestMethod]
         [DynamicData(nameof(GetKey), DynamicDataSourceType.Method)]
-        public void Can_set_json_property(string[] keys)
+        public void Can_set_json_properties(string[] keys)
         {
             // Arrange
             using var approver = ApprovalTests.Namers.ApprovalResults.ForScenario(string.Join("__", keys));
@@ -62,25 +81,7 @@ namespace Acklann.Cecrets.Tests
             // Assert
             Approvals.VerifyFile(sourceFile);
         }
-
-        [TestMethod]
-        public void Can_get_json_value()
-        {
-            // Arrange
-            var sourceFile = TestData.GetFile("config1.json");
-
-            // Act
-            var result1 = JsonEditor.GetValue(sourceFile, "nugetKey");
-            var result2 = JsonEditor.GetValue(sourceFile, "local:datastore:auth");
-            var result3 = JsonEditor.GetValue(sourceFile, "local:datastore:main");
-            var result4 = JsonEditor.GetValue(sourceFile, "invaild");
-
-            // Assert
-            result1.ShouldNotBeNullOrEmpty();
-            result2.ShouldNotBeNullOrEmpty();
-            result3.ShouldNotBeNullOrEmpty();
-            result4.ShouldBeNullOrEmpty();
-        }
+        
 
         #region Backing Members
 
