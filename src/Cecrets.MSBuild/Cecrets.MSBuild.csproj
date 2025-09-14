@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -9,9 +9,9 @@
     <Title>Cecrets</Title>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
-    <Version>2.0.1</Version>
-    <AssemblyVersion>2.0.1</AssemblyVersion>
-    <AssemblyFileVersion>2.0.1</AssemblyFileVersion>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <AssemblyFileVersion>2.0.2</AssemblyFileVersion>
 
     <RepositoryUrl>https://github.com/Ackara/Cecrets.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Ackara/Cecrets</PackageProjectUrl>
@@ -19,7 +19,7 @@
 
     <Company>Ackara</Company>
     <Authors>Ackara</Authors>
-    <Copyright>Copyright 2022 Ackara, All Rights Reserved.</Copyright>
+    <Copyright>Copyright 2025 Ackara, All Rights Reserved.</Copyright>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>license.txt</PackageLicenseFile>

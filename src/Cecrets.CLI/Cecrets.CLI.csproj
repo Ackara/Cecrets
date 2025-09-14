@@ -8,9 +8,9 @@
 
   <PropertyGroup>
     <Title>Cecrets</Title>
-    <Version>2.0.1</Version>
-    <AssemblyVersion>2.0.1</AssemblyVersion>
-    <AssemblyFileVersion>2.0.1</AssemblyFileVersion>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <AssemblyFileVersion>2.0.2</AssemblyFileVersion>
     <Description>A tool for sharing sensitive data across your projects.</Description>
 
     <PackageIcon>icon.png</PackageIcon>
@@ -20,7 +20,7 @@
     <PackageTags>user, secrets</PackageTags>
     <Authors>Ackara</Authors>
     <Company>Ackara</Company>
-    <Copyright>Copyright 2022 Ackara, All Rights Reserved.</Copyright>
+    <Copyright>Copyright 2025 Ackara, All Rights Reserved.</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
   </PropertyGroup>
 
