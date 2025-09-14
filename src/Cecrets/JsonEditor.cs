@@ -83,7 +83,7 @@ namespace Acklann.Cecrets
             }
         }
 
-        public static void SetProperty(Stream inputStream, string key, object value)
+        public static JObject SetProperty(Stream inputStream, string key, object value)
         {
             if (inputStream == null) throw new ArgumentNullException(nameof(inputStream));
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), $"The {nameof(key)} cannot be null or whitespace.");
@@ -97,7 +97,7 @@ namespace Acklann.Cecrets
 
             // Initializing variables.
             string[] segments = key.Split(new char[] { '.', ':' }, StringSplitOptions.RemoveEmptyEntries);
-            if (segments.Length == 0) return;
+            if (segments.Length == 0) return document;
 
             var propertyNames = new Stack<string>(segments.Reverse());
             JProperty property = null;
@@ -106,10 +106,7 @@ namespace Acklann.Cecrets
             setvalue();
 
             // Save the document.
-            inputStream.Seek(0, SeekOrigin.Begin);
-            using var writer = new JsonTextWriter(new StreamWriter(inputStream)) { Formatting = Formatting.Indented };
-            document.WriteTo(writer);
-            writer.Flush();
+            return document;
 
             // ===== DONE ===== //
 
@@ -176,7 +173,7 @@ namespace Acklann.Cecrets
                                    where string.Equals(prop.Name, name, StringComparison.InvariantCultureIgnoreCase)
                                    select prop
                                    ).FirstOrDefault();
-                    
+
                     throw new System.NotImplementedException();
                 }
                 else
@@ -197,9 +194,17 @@ namespace Acklann.Cecrets
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
             CreateJsonFileIfNotExists(sourceFile);
 
+            JObject document = null;
             using (Stream file = new FileStream(sourceFile, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
             {
-                SetProperty(file, key, value);
+                document = SetProperty(file, key, value);
+            }
+
+            using (Stream file = new FileStream(sourceFile, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+            using (var writer = new JsonTextWriter(new StreamWriter(file)) { Formatting = Formatting.Indented })
+            {
+                document.WriteTo(writer);
+                writer.Flush();
             }
         }
 

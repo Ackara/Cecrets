@@ -16,7 +16,7 @@ namespace Acklann.Cecrets.Tests
             if (Directory.Exists(_currentWorkingDirectory)) Directory.Delete(_currentWorkingDirectory, recursive: true);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(GetJPaths), DynamicDataSourceType.Method)]
         public void Can_copy_json_property(string jpath)
         {
@@ -55,7 +55,7 @@ namespace Acklann.Cecrets.Tests
             result4.ShouldBeNullOrEmpty();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DynamicData(nameof(GetKey), DynamicDataSourceType.Method)]
         public void Can_set_json_properties(string[] keys)
         {
@@ -66,9 +66,10 @@ namespace Acklann.Cecrets.Tests
             var sourceFile = Path.Combine(_currentWorkingDirectory, $"secrets-set-test({string.Join(" ", keys)}).json");
 
             // Act
+            int index = 0;
             foreach (var item in keys)
             {
-                JsonEditor.SetProperty(sourceFile, item, 123);
+                JsonEditor.SetProperty(sourceFile, item, (index++ % 2 == 0 ? 123 : 456));
 
                 System.Diagnostics.Debug.WriteLine($"arg: {item}");
                 var result = File.ReadAllText(sourceFile);
@@ -81,7 +82,6 @@ namespace Acklann.Cecrets.Tests
             // Assert
             Approvals.VerifyFile(sourceFile);
         }
-        
 
         #region Backing Members
 
