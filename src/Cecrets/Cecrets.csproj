@@ -26,9 +26,6 @@
     <Company>Ackara</Company>
     <Owners>$(Company)</Owners>
     <Copyright>Copyright 2025 Ackara, All Rights Reserved.</Copyright>
-
-    <!--<IsTool>true</IsTool>-->
-    <!--<PackageType>DotnetTool</PackageType>-->
     <BuildOutputTargetFolder>tools</BuildOutputTargetFolder>
     <DevelopmentDependency>true</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
